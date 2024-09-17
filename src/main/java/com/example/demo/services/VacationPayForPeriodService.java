@@ -2,25 +2,15 @@ package com.example.demo.services;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.Month;
 import java.time.MonthDay;
-import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Scanner;
 import java.util.stream.Collectors;
-import java.io.File;
 import java.io.FileNotFoundException;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.example.demo.models.VacationPay;
 
 @Service
 public class VacationPayForPeriodService {
-	List<String> holidayDates = List.of("01-01", "01-02", "01-03", "01-04", "01-05", "01-06", "01-07", "01-08", "02-23",
+	private List<String> holidayDates = List.of("01-01", "01-02", "01-03", "01-04", "01-05", "01-06", "01-07", "01-08", "02-23",
 			"03-08", "05-01", "05-09", "06-12", "11-04");
 
 	public Double calculateVacationPay(double averageSalary, int vacationDays) {
@@ -49,9 +39,17 @@ public class VacationPayForPeriodService {
 
 	public boolean isHoliday(LocalDate date) {
 		MonthDay monthDay = MonthDay.from(date);
-		List<MonthDay> holidays = holidayDates.stream().map(dateStr -> MonthDay
+		List<MonthDay> holidays = getHolidayDates().stream().map(dateStr -> MonthDay
 				.of(Integer.parseInt(dateStr.substring(0, 2)), Integer.parseInt(dateStr.substring(3))))
 				.collect(Collectors.toList());
 		return holidays.contains(monthDay);
+	}
+
+	public List<String> getHolidayDates() {
+		return holidayDates;
+	}
+
+	public void setHolidayDates(List<String> holidayDates) {
+		this.holidayDates = holidayDates;
 	}
 }

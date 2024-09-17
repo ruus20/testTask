@@ -25,7 +25,8 @@ public class VacationPayController {
 
 	@GetMapping("/calculate")
 	public ResponseEntity<Double> calculateVacationPay(@RequestParam double averageSalary,
-			@RequestParam int vacationDays, @RequestParam(required = false) String startDate) throws FileNotFoundException {
+			@RequestParam int vacationDays, @RequestParam(required = false) String startDate)
+			throws FileNotFoundException {
 		try {
 			double vacationPay = startDate == null
 					? vacationPayForPeriodService.calculateVacationPay(averageSalary, vacationDays)
